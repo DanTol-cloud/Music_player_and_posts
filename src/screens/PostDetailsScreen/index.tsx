@@ -1,15 +1,9 @@
 import {ScrollView, Text} from 'react-native';
 
-import {RouteProp} from '@react-navigation/native';
+import {replaceImageLinks} from '@features';
+import {PostDetailsScreenNavigationProp} from '@types';
 
 import {styles} from './styles.ts';
-import {AppStackParamList} from '../../../types.ts';
-import replaceImageLinks from '../../features/replaceLinkWithComponent.tsx';
-
-type PostDetailsScreenNavigationProp = RouteProp<
-  AppStackParamList,
-  'PostDetails'
->;
 
 interface PostDetailsScreenProps {
   route: PostDetailsScreenNavigationProp;

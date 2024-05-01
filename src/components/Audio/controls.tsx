@@ -1,17 +1,13 @@
 import {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
+import {downloadTrack} from '@features';
+import {DownloadSVG, NextSVG, PauseSVG, PrevSVG, ResumeSVG} from '@svg';
 import {exists} from 'react-native-fs';
 import TrackPlayer, {State, Track} from 'react-native-track-player';
+import {styles} from 'screens/AudioScreen/styles.ts';
 
 import TrackProgress from './trackProgress.tsx';
-import DownloadedSVG from '../../assets/svg/DownloadSVG.tsx';
-import NextSVG from '../../assets/svg/NextSVG.tsx';
-import PauseSVG from '../../assets/svg/PauseSVG.tsx';
-import PrevSVG from '../../assets/svg/PrevSVG.tsx';
-import ResumeSVG from '../../assets/svg/ResumeSVG.tsx';
-import downloadTrack from '../../features/downloadTrack.tsx';
-import {styles} from '../../screens/AudioScreen/styles.ts';
 
 type ControlsType = {
   track: Track;
@@ -58,7 +54,7 @@ const Controls = ({track, path}: ControlsType) => {
                 setIsPlay,
               })
             }>
-            <DownloadedSVG />
+            <DownloadSVG />
           </TouchableOpacity>
         </View>
       ) : (

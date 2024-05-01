@@ -1,17 +1,17 @@
 import {SafeAreaView} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
+import {BottomSheetProvider} from 'context/bottomSheetContext.tsx';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
+import {index} from 'services/store';
 
-import {BottomSheetProvider} from './src/context/bottomSheetContext.tsx';
 import AppNavigation from './src/navigation/AppNavigation.tsx';
-import {store} from './src/services/store.ts';
 
 const App = (): JSX.Element => (
   <NavigationContainer>
     <GestureHandlerRootView>
-      <Provider store={store}>
+      <Provider store={index}>
         <BottomSheetProvider>
           <SafeAreaView style={{flex: 1}}>
             <AppNavigation />

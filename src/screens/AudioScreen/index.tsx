@@ -1,64 +1,41 @@
 import {useEffect, useState} from 'react';
 import {ActivityIndicator, SafeAreaView} from 'react-native';
 
+import {Controls, Header, Playlist} from '@components';
+import {handleQueryError} from '@features';
 import BottomSheet from '@gorhom/bottom-sheet';
+import {UseGetAllQuery, UseQueue} from '@hooks';
+import {UseBottomSheet} from 'context/bottomSheetContext.tsx';
 import {DownloadDirectoryPath} from 'react-native-fs';
-import TrackPlayer, {
-  Event,
-  State,
-  Track,
-  useTrackPlayerEvents,
-} from 'react-native-track-player';
+import {addTrack, setupPlayer} from 'services/music/musicController.ts';
 
 import {styles} from './styles.ts';
-import Controls from '../../components/Audio/controls.tsx';
-import Header from '../../components/Audio/header.tsx';
-import Playlist from '../../components/Audio/playlist.tsx';
-import {useBottomSheet} from '../../context/bottomSheetContext.tsx';
-import handleQueryError from '../../features/handleQueryError.tsx';
-import {useGetAllQuery} from '../../hooks/hooks.ts';
-import {addTrack, setupPlayer} from '../../services/musicController.ts';
 
 const AudioScreen = () => {
-  const [queue, setQueue] = useState<Track[]>([]);
-  const [currentTrack, setCurrentTrack] = useState<number | null>(0);
-  const [play, setPlay] = useState(false);
+  const {data, error, isLoading} = UseGetAllQuery();
+
+  const {sheetRef, snapPoints} = UseBottomSheet();
+
+  const [didSetup, setDidSetup] = useState(false);
   const [track, setTrack] = useState<{url: string; title: string | undefined}>({
     url: '',
     title: '',
   });
 
-  const {data, error, isLoading} = useGetAllQuery();
-
-  const {sheetRef, snapPoints} = useBottomSheet();
+  const {currentTrack, queue} = UseQueue(didSetup);
 
   useEffect(() => {
     if (data) {
-      const loadPlaylist = async () => {
-        const newQueue = await TrackPlayer.getQueue();
-        setQueue(newQueue);
-      };
-
       const setup = async () => {
         let isSetup = await setupPlayer();
         await addTrack(data?.audio);
-        setPlay(isSetup);
+        setDidSetup(isSetup);
       };
-      setup().then(() => {
-        loadPlaylist();
-      });
+      setup();
     }
   }, [data]);
 
-  useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
-    //@ts-ignore
-    if (event.state === State.nextTrack) {
-      let index = await TrackPlayer.getCurrentTrack();
-      setCurrentTrack(index);
-    }
-  });
-
-  if (!play && isLoading) {
+  if (!didSetup && isLoading) {
     return <ActivityIndicator />;
   }
 

@@ -1,6 +1,7 @@
 import {memo} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
+import {UseLayout} from '@hooks';
 import {Track} from 'react-native-track-player';
 
 type PlayListItemProps = {
@@ -17,17 +18,22 @@ const PlayListItem = ({
   title,
   isCurrent,
   index,
-}: PlayListItemProps) => (
-  <TouchableOpacity onPress={() => handleItemPress(item, index)}>
-    <Text
-      style={{
-        ...styles.playlistItem,
-        ...{backgroundColor: isCurrent ? '#666' : 'transparent'},
-      }}>
-      {title}
-    </Text>
-  </TouchableOpacity>
-);
+}: PlayListItemProps) => {
+  const {onLayout} = UseLayout();
+  return (
+    <TouchableOpacity
+      onLayout={onLayout}
+      onPress={() => handleItemPress(item, index)}>
+      <Text
+        style={{
+          ...styles.playlistItem,
+          ...{backgroundColor: isCurrent ? '#666' : 'transparent'},
+        }}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

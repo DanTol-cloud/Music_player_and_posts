@@ -1,10 +1,8 @@
-import * as React from 'react';
-
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {AppStackParamList} from '@types';
+import PostDetailsScreen from 'screens/PostDetailsScreen';
 
 import TabNavigation from './TabNavigation.tsx';
-import {AppStackParamList} from '../../types.ts';
-import PostDetailsScreen from '../screens/PostDetailsScreen';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 

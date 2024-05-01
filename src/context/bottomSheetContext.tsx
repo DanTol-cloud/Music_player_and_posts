@@ -44,4 +44,4 @@ export const BottomSheetProvider = ({children}: BottomSheetProviderType) => {
   );
 };
 
-export const useBottomSheet = () => useContext(BottomSheetContext);
+export const UseBottomSheet = () => useContext(BottomSheetContext);

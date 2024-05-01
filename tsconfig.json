@@ -1,6 +1,16 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext"
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@components": ["src/components/index"],
+      "@hooks": ["src/hooks/index"],
+      "@features": ["src/features/index"],
+      "@types": ["src/services/types/index"],
+      "@svg": ["src/assets/index"],
+      "@screens/*": ["src/screens/*"],
+    }
   },
 }

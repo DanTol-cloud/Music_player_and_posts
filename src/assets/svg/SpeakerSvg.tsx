@@ -1,6 +1,6 @@
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
-function SpeakerSvg(props: SvgProps) {
+function SpeakerSVG(props: SvgProps) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,4 +21,4 @@ function SpeakerSvg(props: SvgProps) {
   );
 }
 
-export default SpeakerSvg;
+export default SpeakerSVG;

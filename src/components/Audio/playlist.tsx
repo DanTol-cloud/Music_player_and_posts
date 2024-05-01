@@ -1,10 +1,11 @@
-import {Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction, useCallback} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 
+import {UseLayout} from '@hooks';
+import {UseBottomSheet} from 'context/bottomSheetContext.tsx';
 import TrackPlayer, {Track} from 'react-native-track-player';
 
 import PlayListItem from './playListItem.tsx';
-import {useBottomSheet} from '../../context/bottomSheetContext.tsx';
 
 type PlaylistType = {
   queue: Track[];
@@ -12,28 +13,41 @@ type PlaylistType = {
   setTrack: Dispatch<SetStateAction<{url: string; title: string | undefined}>>;
 };
 const Playlist = ({queue, currentTrack, setTrack}: PlaylistType) => {
-  const {handleSnapPress} = useBottomSheet();
+  const {handleSnapPress} = UseBottomSheet();
 
-  const handleItemPress = async (item: Track, index: number) => {
-    await TrackPlayer.skip(Number(index));
-    setTrack({url: item.url, title: item.title});
-    handleSnapPress(0);
-  };
+  const {getItemLayout} = UseLayout();
+
+  const renderItem = useCallback(
+    ({item, index}: {item: Track; index: number}) => {
+      const handleItemPress = async () => {
+        await TrackPlayer.skip(Number(index));
+        setTrack({url: item.url, title: item.title});
+        handleSnapPress(0);
+      };
+
+      return (
+        <PlayListItem
+          item={item}
+          handleItemPress={handleItemPress}
+          title={item.title}
+          isCurrent={currentTrack === index}
+          index={index}
+        />
+      );
+    },
+    [currentTrack, handleSnapPress, setTrack],
+  );
+
+  const keyExtractor = (item: Track) => item.id.toString();
 
   return (
     <View>
       <View style={styles.playlist}>
         <FlatList
+          keyExtractor={keyExtractor}
           data={queue}
-          renderItem={({item, index}: {item: Track; index: number}) => (
-            <PlayListItem
-              item={item}
-              handleItemPress={handleItemPress}
-              title={item.title}
-              isCurrent={currentTrack === index}
-              index={index}
-            />
-          )}
+          getItemLayout={getItemLayout}
+          renderItem={renderItem}
         />
       </View>
     </View>

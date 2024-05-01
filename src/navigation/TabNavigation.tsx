@@ -1,10 +1,8 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {TabStackParamList} from '../../types.ts';
-import PostSvg from '../assets/svg/PostSVG.tsx';
-import SpeakerSvg from '../assets/svg/SpeakerSvg.tsx';
-import AudioScreen from '../screens/AudioScreen';
-import PostScreen from '../screens/PostScreen';
+import {PostSVG, SpeakerSVG} from '@svg';
+import {TabStackParamList} from '@types';
+import AudioScreen from 'screens/AudioScreen';
+import PostScreen from 'screens/PostScreen';
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 const TabNavigation = (): JSX.Element => (
@@ -15,7 +13,7 @@ const TabNavigation = (): JSX.Element => (
     }}>
     <Tab.Screen
       options={{
-        tabBarIcon: () => <SpeakerSvg color={'#EBF400'} />,
+        tabBarIcon: () => <SpeakerSVG />,
         tabBarItemStyle: {alignSelf: 'center'},
       }}
       name="AudioTab"
@@ -23,7 +21,7 @@ const TabNavigation = (): JSX.Element => (
     />
     <Tab.Screen
       options={{
-        tabBarIcon: () => <PostSvg />,
+        tabBarIcon: () => <PostSVG />,
         tabBarItemStyle: {alignSelf: 'center'},
       }}
       name="PostTab"

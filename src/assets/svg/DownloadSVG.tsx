@@ -1,6 +1,6 @@
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
-const DownloadedSVG = (props: SvgProps) => {
+const DownloadSVG = (props: SvgProps) => {
   return (
     <Svg
       width="150px"
@@ -26,4 +26,4 @@ const DownloadedSVG = (props: SvgProps) => {
   );
 };
 
-export default DownloadedSVG;
+export default DownloadSVG;

@@ -1,6 +1,6 @@
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
-function PostSvg(props: SvgProps) {
+function PostSVG(props: SvgProps) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,4 +20,4 @@ function PostSvg(props: SvgProps) {
   );
 }
 
-export default PostSvg;
+export default PostSVG;

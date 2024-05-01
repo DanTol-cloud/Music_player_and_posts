@@ -7,11 +7,11 @@ import TrackPlayer, {
   Track,
   useTrackPlayerEvents,
 } from 'react-native-track-player';
-
-import {styles} from '../../screens/AudioScreen/styles.ts';
+import {styles} from 'screens/AudioScreen/styles.ts';
 
 const Header = () => {
   const [info, setInfo] = useState<Track | undefined>(undefined);
+
   useEffect(() => {
     setTrackInfo();
   }, []);
@@ -23,13 +23,13 @@ const Header = () => {
     }
   });
 
-  async function setTrackInfo() {
+  const setTrackInfo = async () => {
     const track = await TrackPlayer.getCurrentTrack();
     if (track != null) {
       const newInfo = await TrackPlayer.getTrack(track);
       setInfo(newInfo);
     }
-  }
+  };
 
   return (
     <View>
